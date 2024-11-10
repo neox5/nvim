@@ -15,9 +15,5 @@ end
 -- Load plugins
 require("plugins")
 
--- Go language server setup
-local lsp_status, lspconfig = pcall(require, "lspconfig")
-if lsp_status then
-  lspconfig.gopls.setup{}
-end
-
+-- Load LSP configurations
+require("lsp.go")

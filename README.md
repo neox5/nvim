@@ -52,12 +52,14 @@ git clone git@github.com:neox5/nvim ~/.config/nvim
 |--------------|-----------|
 | Colorscheme  | Rose Pine |
 
-### Development
+### Plugins
 
-| Tool          | Description                      |
-|---------------|----------------------------------|
-| `gopls`       | Go language server               |
-| Treesitter    | Syntax highlighting for Go       |
-| `vim-go`      | Go tools (linting, formatting)   |
-| Tmux Navigator| Seamless Tmux-Neovim navigation  | 
+| Plugin                          | Function                                                                 |
+|---------------------------------|--------------------------------------------------------------------------|
+| `christoomey/vim-tmux-navigator`| Enables seamless navigation between Tmux and Neovim panes                |
+| `fatih/vim-go`                  | Adds Go-specific tools for linting, formatting, and testing             |
+| `neovim/nvim-lspconfig`         | Provides configurations for setting up language servers (LSPs)          |
+| `nvim-treesitter/nvim-treesitter` | Provides advanced syntax highlighting and code structure parsing      |
+| `rose-pine/neovim`              | Adds the Rose Pine theme for a minimalist aesthetic                     |
+| `wbthomason/packer.nvim`        | Plugin manager used to install and manage Neovim plugins                |
 

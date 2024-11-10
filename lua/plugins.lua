@@ -14,12 +14,12 @@ local packer_bootstrap = ensure_packer()
 
 -- Plugin setup
 require("packer").startup(function(use)
-  use "wbthomason/packer.nvim"
-  use "rose-pine/neovim"
+  use "christoomey/vim-tmux-navigator"
+  use "fatih/vim-go"
   use "neovim/nvim-lspconfig"
   use "nvim-treesitter/nvim-treesitter"
-  use "fatih/vim-go"
-  use "christoomey/vim-tmux-navigator"
+  use "rose-pine/neovim"
+  use "wbthomason/packer.nvim"
 
   -- Treesitter configuration for Go
   local treesitter_ok, treesitter_configs = pcall(require, "nvim-treesitter.configs")
