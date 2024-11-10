@@ -1,3 +1,5 @@
+Here’s the updated, more concise `README.md`:
+
 # Neovim Config (neox5)
 
 Configuration for Neovim, optimized for Go development, with Rose Pine theme and Tmux integration.
@@ -11,19 +13,26 @@ Configuration for Neovim, optimized for Go development, with Rose Pine theme and
 ## Installation
 
 1. **Clone the Repository**  
-   ```bash
-   git clone https://github.com/yourusername/nvim ~/.config/nvim
-   ```
+   `git clone https://github.com/neox5/nvim ~/.config/nvim`
 
-2. **Install Plugins**  
-   Open Neovim and run `:PackerSync`
+2. **Install Language Servers and Tools**
 
-3. **Install Go Language Server**  
-   ```bash
-   go install golang.org/x/tools/gopls@latest
-   ```
+   | Language | Installation Command                                             | Description                           |
+   |----------|------------------------------------------------------------------|---------------------------------------|
+   | Go       | `go install golang.org/x/tools/gopls@latest`                     | Installs the Go language server       |
 
-4. **Restart Neovim**
+3. **Start Neovim**  
+   Automatically installs plugins on the first start.
+
+4. **Restart Neovim**  
+   Restart to apply the configured theme.
+
+## Commands
+
+| Command           | Description                                                     |
+|-------------------|-----------------------------------------------------------------|
+| `:PackerSync`     | Installs and updates plugins specified in the configuration     |
+| `:PackerCleanup`  | Removes installed plugins and cache, resetting the plugin state |
 
 ## Configuration Overview
 
@@ -51,11 +60,6 @@ Configuration for Neovim, optimized for Go development, with Rose Pine theme and
 | `gopls`       | Go language server               |
 | Treesitter    | Syntax highlighting for Go       |
 | `vim-go`      | Go tools (linting, formatting)   |
-| Tmux Navigator| Seamless Tmux-Neovim navigation  |
+| Tmux Navigator| Seamless Tmux-Neovim navigation  | 
 
-## Usage
-
-- **Start Neovim**: `nvim`
-- **Update Plugins**: `:PackerSync`
-- **Clean Up Plugins and Cache**: `:PackerCleanup`
-
+This `README.md` is now concise, providing essential information without unnecessary verbosity.

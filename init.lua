@@ -9,7 +9,7 @@ vim.opt.termguicolors = true
 -- Load Rose Pine theme if available
 local status_ok, _ = pcall(vim.cmd, "colorscheme rose-pine")
 if not status_ok then
-  vim.notify("Rose Pine theme not found. Run :PackerSync to install plugins.", vim.log.levels.WARN)
+  vim.notify("Rose Pine theme not found. Restart Neovim after the automatic Packer installation (or run :PackerSync).", vim.log.levels.WARN)
 end
 
 -- Load plugins
