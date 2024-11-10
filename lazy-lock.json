@@ -1,0 +1,8 @@
+{
+  "go.nvim": { "branch": "master", "commit": "79b6de4e4565965a31098f453433df252a989f49" },
+  "guihua.lua": { "branch": "master", "commit": "d783191eaa75215beae0c80319fcce5e6b3beeda" },
+  "lazy.nvim": { "branch": "main", "commit": "60cf258a9ae7fffe04bb31141141a91845158dcc" },
+  "nvim-lspconfig": { "branch": "master", "commit": "4cb925e96288a71409a86c84fd97f4434a95453e" },
+  "nvim-treesitter": { "branch": "master", "commit": "8e40904e49bbad5812798eb54be8c00d77cdd301" },
+  "rose-pine": { "branch": "main", "commit": "07a887a7bef4aacea8c7caebaf8cbf808cdc7a8e" }
+}

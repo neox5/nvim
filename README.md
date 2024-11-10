@@ -2,12 +2,6 @@
 
 Configuration for Neovim, optimized for Go development, with Rose Pine theme and Tmux integration.
 
-## Prerequisites
-
-- **Neovim**: Version 0.5 or higher
-- **Packer**: Plugin manager, auto-installed if missing
-- **Go**: [Install](https://golang.org/dl/) and add to `PATH`
-
 ## Installation
 
 1. **Clone the Repository**  
@@ -22,9 +16,7 @@ git clone git@github.com:neox5/nvim ~/.config/nvim
   |----------|------------------------------------------------------------------|---------------------------------------|
   | Go       | `go install golang.org/x/tools/gopls@latest`                     | Installs the Go language server       |
 
-3. **Start Neovim**: Installs plugins automatically on the first start.
-
-4. **Restart Neovim**: Restart to apply the theme.
+3. **Start Neovim**: Installs lazy.nvim and plugins automatically on the first start.
 
 ## Commands
 
@@ -56,10 +48,8 @@ git clone git@github.com:neox5/nvim ~/.config/nvim
 
 | Plugin                          | Function                                                                 |
 |---------------------------------|--------------------------------------------------------------------------|
-| `christoomey/vim-tmux-navigator`| Enables seamless navigation between Tmux and Neovim panes                |
-| `fatih/vim-go`                  | Adds Go-specific tools for linting, formatting, and testing             |
 | `neovim/nvim-lspconfig`         | Provides configurations for setting up language servers (LSPs)          |
 | `nvim-treesitter/nvim-treesitter` | Provides advanced syntax highlighting and code structure parsing      |
 | `rose-pine/neovim`              | Adds the Rose Pine theme for a minimalist aesthetic                     |
-| `wbthomason/packer.nvim`        | Plugin manager used to install and manage Neovim plugins                |
+| `folke/lazy.nvim`               | Plugin manager used to install and manage Neovim plugins                |
 
