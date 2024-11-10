@@ -62,4 +62,3 @@ Configuration for Neovim, optimized for Go development, with Rose Pine theme and
 | `vim-go`      | Go tools (linting, formatting)   |
 | Tmux Navigator| Seamless Tmux-Neovim navigation  | 
 
-This `README.md` is now concise, providing essential information without unnecessary verbosity.
