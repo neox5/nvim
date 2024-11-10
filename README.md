@@ -11,9 +11,10 @@ Configuration for Neovim, optimized for Go development, with Rose Pine theme and
 ## Installation
 
 1. **Clone the Repository**  
-  ```bash
-    git clone git@github.com:neox5/nvim ~/.config/nvim`
-  ```
+
+```bash
+git clone git@github.com:neox5/nvim ~/.config/nvim
+```
 
 2. **Install Language Servers and Tools**
 
