@@ -21,11 +21,9 @@ Configuration for Neovim, optimized for Go development, with Rose Pine theme and
   |----------|------------------------------------------------------------------|---------------------------------------|
   | Go       | `go install golang.org/x/tools/gopls@latest`                     | Installs the Go language server       |
 
-3. **Start Neovim**  
-  Install plugins automatically on the first start.
+3. **Start Neovim**: Installs plugins automatically on the first start.
 
-4. **Restart Neovim**
-  Restart to apply the theme.
+4. **Restart Neovim**: Restart to apply the theme.
 
 ## Commands
 
