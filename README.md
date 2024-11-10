@@ -57,4 +57,5 @@ Configuration for Neovim, optimized for Go development, with Rose Pine theme and
 
 - **Start Neovim**: `nvim`
 - **Update Plugins**: `:PackerSync`
+- **Clean Up Plugins and Cache**: `:PackerCleanup`
 

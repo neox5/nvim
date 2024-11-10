@@ -13,7 +13,7 @@ end
 local packer_bootstrap = ensure_packer()
 
 -- Plugin setup
-return require("packer").startup(function(use)
+require("packer").startup(function(use)
   use "wbthomason/packer.nvim"
   use "rose-pine/neovim"
   use "neovim/nvim-lspconfig"
@@ -21,7 +21,7 @@ return require("packer").startup(function(use)
   use "fatih/vim-go"
   use "christoomey/vim-tmux-navigator"
 
-  -- Conditional Treesitter configuration
+  -- Treesitter configuration for Go
   local treesitter_ok, treesitter_configs = pcall(require, "nvim-treesitter.configs")
   if treesitter_ok then
     treesitter_configs.setup {
@@ -34,4 +34,16 @@ return require("packer").startup(function(use)
     require("packer").sync()
   end
 end)
+
+-- Define a function to create the PackerCleanup command after plugins are loaded
+local function setup_packer_cleanup()
+  vim.api.nvim_create_user_command("PackerCleanup", function()
+    vim.fn.delete(vim.fn.stdpath("data"), "rf")   -- Delete plugins
+    vim.fn.delete(vim.fn.stdpath("cache"), "rf")  -- Delete cache
+    print("Neovim data and cache directories have been cleaned.")
+  end, {})
+end
+
+-- Call the setup function after a slight delay to ensure Neovim is fully initialized
+vim.defer_fn(setup_packer_cleanup, 0)
 
