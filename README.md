@@ -1,5 +1,3 @@
-Here’s the updated, more concise `README.md`:
-
 # Neovim Config (neox5)
 
 Configuration for Neovim, optimized for Go development, with Rose Pine theme and Tmux integration.
@@ -13,19 +11,21 @@ Configuration for Neovim, optimized for Go development, with Rose Pine theme and
 ## Installation
 
 1. **Clone the Repository**  
-   `git clone https://github.com/neox5/nvim ~/.config/nvim`
+  ```bash
+    git clone git@github.com:neox5/nvim ~/.config/nvim`
+  ```
 
 2. **Install Language Servers and Tools**
 
-   | Language | Installation Command                                             | Description                           |
-   |----------|------------------------------------------------------------------|---------------------------------------|
-   | Go       | `go install golang.org/x/tools/gopls@latest`                     | Installs the Go language server       |
+  | Language | Installation Command                                             | Description                           |
+  |----------|------------------------------------------------------------------|---------------------------------------|
+  | Go       | `go install golang.org/x/tools/gopls@latest`                     | Installs the Go language server       |
 
 3. **Start Neovim**  
-   Automatically installs plugins on the first start.
+  Install plugins automatically on the first start.
 
-4. **Restart Neovim**  
-   Restart to apply the configured theme.
+4. **Restart Neovim**
+  Restart to apply the theme.
 
 ## Commands
 
