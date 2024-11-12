@@ -1,5 +1,3 @@
-print("hello")
-
 -- Set leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -27,12 +25,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Load plugins using lazy.nvim
+require("lazy").setup("plugins")
+
 -- Load core configurations
 require("core.options")
 require("core.keymaps")
-
--- Load plugins using lazy.nvim
-require("lazy").setup("plugins")
 
 -- custom commands
 vim.api.nvim_create_user_command("UninstallPlugins", function()
