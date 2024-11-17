@@ -49,7 +49,7 @@ return {
     -- Configure gopls for Go
     lspconfig.gopls.setup({
       cmd = { "gopls" },
-      root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
+      root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
       on_attach = function(client, bufnr)
         local function organize_imports()
           local params = vim.lsp.util.make_range_params()
@@ -76,12 +76,16 @@ return {
       end,
       settings = {
         gopls = {
-          gofumpt = true, -- Enforce stricter formatting
-          experimentalWorkspaceModule = true, -- Enable workspace features
+          gofumpt = true, -- Enforce stricter formatting standards
           usePlaceholders = true, -- Enable placeholders in completions
+          analyses = {
+            unusedparams = true, -- Highlight unused function parameters
+          },
+          staticcheck = true, -- Enable additional static analysis checks
         },
       },
     })
+
 
     -- Setup nvim-cmp
     cmp.setup({
