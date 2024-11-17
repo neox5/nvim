@@ -1,9 +1,19 @@
 return {
   "neovim/nvim-lspconfig",
-  dependencies = { "hrsh7th/cmp-nvim-lsp", "hrsh7th/nvim-cmp" },
+  dependencies = {
+    "hrsh7th/cmp-nvim-lsp",  -- LSP completion
+    "hrsh7th/nvim-cmp",      -- Completion framework
+    "hrsh7th/cmp-buffer",    -- Buffer completions
+    "hrsh7th/cmp-path",      -- Path completions
+    "saadparwaiz1/cmp_luasnip", -- Snippet completions
+    "L3MON4D3/LuaSnip",      -- Snippet engine
+    "rafamadriz/friendly-snippets", -- Predefined snippets
+  },
   config = function()
-    lspconfig = require("lspconfig")
-    
+    local lspconfig = require("lspconfig")
+    local cmp = require("cmp")
+    local luasnip = require("luasnip")
+
     -- Reserve a space in the gutter
     vim.opt.signcolumn = "yes"
 
@@ -21,7 +31,7 @@ return {
     vim.api.nvim_create_autocmd("LspAttach", {
       desc = "LSP actions",
       callback = function(event)
-        local opts = {buffer = event.buf}
+        local opts = { buffer = event.buf }
 
         vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
         vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
@@ -31,17 +41,16 @@ return {
         vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
         vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
         vim.keymap.set("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-        vim.keymap.set({"n", "x"}, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+        vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", opts)
         vim.keymap.set("n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
       end,
     })
 
-    -- golsp
-    -- > add imports on save
-    -- > auto-format on save
+    -- Configure gopls for Go
     lspconfig.gopls.setup({
+      cmd = { "gopls" },
+      root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
       on_attach = function(client, bufnr)
-        -- Define the organize_imports function
         local function organize_imports()
           local params = vim.lsp.util.make_range_params()
           params.context = { only = { "source.organizeImports" } }
@@ -55,7 +64,6 @@ return {
         end
 
         if client.server_capabilities.documentFormattingProvider then
-          -- Register the BufWritePre autocmd
           vim.api.nvim_create_autocmd("BufWritePre", {
             group = vim.api.nvim_create_augroup("GoFormat", { clear = true }),
             buffer = bufnr,
@@ -65,59 +73,42 @@ return {
             end
           })
         end
-      end
+      end,
+      settings = {
+        gopls = {
+          gofumpt = true, -- Enforce stricter formatting
+          experimentalWorkspaceModule = true, -- Enable workspace features
+          usePlaceholders = true, -- Enable placeholders in completions
+        },
+      },
     })
 
+    -- Setup nvim-cmp
+    cmp.setup({
+      snippet = {
+        expand = function(args)
+          luasnip.lsp_expand(args.body) -- Use LuaSnip for snippet expansion
+        end,
+      },
+      mapping = {
+        ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.close(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      },
+      sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+      }, {
+        { name = "buffer" },
+        { name = "path" },
+      }),
+    })
+
+    -- Enable LuaSnip
+    require("luasnip.loaders.from_vscode").lazy_load()
   end
 }
-
--- return {
---   "neovim/nvim-lspconfig",
---   config = function()
---     -- General LSP settings can be configured here
---     local lspconfig = require("lspconfig")
---
---     -- Setup other language servers if needed
---     -- lspconfig.pyright.setup{}
---     -- lspconfig.tsserver.setup{}
---
---     -- Configure gopls with auto-format on save
---     lspconfig.gopls.setup{
---       on_attach = function(client, bufnr)
---         if client.server_capabilities.documentFormattingProvider then
---           vim.api.nvim_create_autocmd("BufWritePre", {
---             group = vim.api.nvim_create_augroup("GoFormat", { clear = true }),
---             buffer = bufnr,
---             callback = function()
---               vim.lsp.buf.format({ async = false })
---             end,
---           })
---         end
---       end
---     }
---
---     -- Global LSP handlers
---     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
---       vim.lsp.handlers.hover,
---       { border = "rounded" }
---     )
---     vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
---       vim.lsp.handlers.signature_help,
---       { border = "rounded" }
---     )
---
---     -- Configure diagnostics
---     vim.diagnostic.config({
---       virtual_text = false,
---       signs = true,
---       update_in_insert = false,
---       underline = true,
---       severity_sort = true,
---       float = {
---         border = "rounded",
---         source = "always",
---       },
---     })
---   end,
--- }
---
