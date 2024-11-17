@@ -37,18 +37,34 @@ return {
     })
 
     -- golsp
+    -- > add imports on save
     -- > auto-format on save
     lspconfig.gopls.setup({
       on_attach = function(client, bufnr)
+        -- Define the organize_imports function
+        local function organize_imports()
+          local params = vim.lsp.util.make_range_params()
+          params.context = { only = { "source.organizeImports" } }
+          local result = vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", params, 1000)
+          if result and result[1] then
+            local actions = result[1].result
+            if actions and actions[1] then
+              vim.lsp.util.apply_workspace_edit(actions[1].edit, "utf-8")
+            end
+          end
+        end
+
         if client.server_capabilities.documentFormattingProvider then
+          -- Register the BufWritePre autocmd
           vim.api.nvim_create_autocmd("BufWritePre", {
             group = vim.api.nvim_create_augroup("GoFormat", { clear = true }),
             buffer = bufnr,
             callback = function()
+              organize_imports()
               vim.lsp.buf.format({ async = false })
             end
           })
-        end 
+        end
       end
     })
 

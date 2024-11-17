@@ -19,3 +19,6 @@ opt.background = "dark"
 
 -- Clipboard
 opt.clipboard = "unnamedplus"
+
+-- Debugging
+opt.showcmd = true
