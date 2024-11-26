@@ -1,0 +1,21 @@
+.
+├── lua
+│   ├── core
+│   │   ├── keymaps.lua
+│   │   └── options.lua
+│   ├── plugins
+│   │   ├── harpoon.lua
+│   │   ├── lspconfig.lua
+│   │   ├── markdown-preview.lua
+│   │   ├── rose-pine.lua
+│   │   ├── telescope.lua
+│   │   ├── treesitter.lua
+│   │   └── which-key.lua
+│   └── utils
+│       └── functions.lua
+├── init.lua
+├── lazy-lock.json
+├── README.md
+└── repo_dir.txt
+
+5 directories, 14 files
