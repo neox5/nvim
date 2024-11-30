@@ -19,6 +19,15 @@ return {
         },
         lualine_c = {
           {
+            "filename",
+            path = 1, -- Show relative path
+            symbols = {
+              modified = " ",
+              readonly = " ",
+              unnamed = "[No Name]",
+            }
+          }, 
+          {
             "diff",
             symbols = {
               added = " ",
