@@ -7,8 +7,5 @@
 *.orig
 *.un~
 
-# Ignore packer plugins directory
-site/pack/packer/
-
-# Ignore Lua plugin compiled files (if applicable)
-plugin/packer_compiled.lua
+# snap output
+snap.txt
