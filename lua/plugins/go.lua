@@ -1,51 +1,92 @@
 return {
   "ray-x/go.nvim",
   dependencies = {
-    "ray-x/guihua.lua",                 -- Floating window UI library
-    "neovim/nvim-lspconfig",           -- LSP support
-    "nvim-treesitter/nvim-treesitter", -- Syntax highlighting
+    "ray-x/guihua.lua",
+    "neovim/nvim-lspconfig",
+    "nvim-treesitter/nvim-treesitter",
   },
   config = function()
     require("go").setup({
-      -- Disable LSP integration in go.nvim
-      lsp_cfg = false,      -- Use lsp.lua for LSP setup
-      lsp_diag_hdlr = false, -- Disable diagnostic handlers in go.nvim
+      -- Disable LSP features (handled by lspconfig.lua)
+      lsp_cfg = false,
+      diagnostic_hdlr = false,
+      
+      -- Disable formatting (handled by gopls in lspconfig.lua)
+      fmt = false,
+      import_on_save = false,
 
-      -- Debugging and Testing Features
-      test_runner = "go",   -- Use the standard `go test` for testing
-      dap_debug = true,     -- Enable nvim-dap integration for debugging
-      luasnip = true,       -- Use luasnip for snippet support
-
-      -- Formatter and Imports (delegated to lsp.lua)
-      fmt = false,          -- Disable formatting in go.nvim
-      import_on_save = false, -- Disable imports in go.nvim
-
-      -- Build tags (optional for debugging/testing)
-      build_tags = "",      -- Specify build tags if necessary
+      lsp_inlay_hints = {
+        enable = false
+      },
+      
+      -- Enable testing and debugging features
+      test_runner = "go",
+      dap_debug = true,
+      dap_debug_gui = true,
+      luasnip = true,
+      
+      -- Test options
+      test_efm = true,
+      test_timeout = "30s",
+      test_env = {},
+      test_template = "",
+      test_template_dir = "",
+      
+      -- Coverage options
+      coverage = {
+        sign = "│",
+        sign_priority = 5,
+      },
+      
+      -- Other useful features
+      comment_placeholder = "",
+      icons = { breakpoint = "🔴", currentpos = "🔶" },
+      verbose = false,
+      
+      -- Build options
+      build_tags = "",
+      textobjects = true,
+      
+      -- Run in floaterm
+      run_in_floaterm = false,
     })
 
-    -- Key mappings for Go-specific functionality
-    local go_group = vim.api.nvim_create_augroup("GoMappings", { clear = true })
+    -- Go-specific keymaps (only when in Go files)
     vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("GoMappings", { clear = true }),
       pattern = "go",
-      group = go_group,
       callback = function(event)
-        -- Test mappings
-        vim.keymap.set("n", "<leader>tt", "<cmd>GoTest<CR>", { buffer = event.buf, desc = "Run Go test package" })
-        vim.keymap.set("n", "<leader>tf", "<cmd>GoTestFunc<CR>", { buffer = event.buf, desc = "Run Go test function" })
-        vim.keymap.set("n", "<leader>tl", "<cmd>GoTestFile<CR>", { buffer = event.buf, desc = "Run Go test file" })
-        vim.keymap.set("n", "<leader>tv", "<cmd>GoTestVerbose<CR>", { buffer = event.buf, desc = "Run Go tests verbose" })
-        vim.keymap.set("n", "<leader>tc", "<cmd>GoCoverage<CR>", { buffer = event.buf, desc = "Show Go test coverage" })
-        vim.keymap.set("n", "<leader>tC", "<cmd>GoCoverageClear<CR>", { buffer = event.buf, desc = "Clear Go test coverage" })
-
-        -- Debugging mappings
-        vim.keymap.set("n", "<leader>dd", ":GoDebug<CR>", { buffer = event.buf, desc = "Start debugging" })
-        vim.keymap.set("n", "<leader>db", ":GoBreakToggle<CR>", { buffer = event.buf, desc = "Toggle breakpoint" })
-        vim.keymap.set("n", "<leader>dr", ":GoDebugRestart<CR>", { buffer = event.buf, desc = "Restart debugging" })
-        vim.keymap.set("n", "<leader>dc", ":lua require('dap').continue()<CR>", { buffer = event.buf, desc = "Continue debugging" })
-        vim.keymap.set("n", "<leader>ds", ":lua require('dap').step_over()<CR>", { buffer = event.buf, desc = "Step over" })
-        vim.keymap.set("n", "<leader>di", ":lua require('dap').step_into()<CR>", { buffer = event.buf, desc = "Step into" })
-        vim.keymap.set("n", "<leader>do", ":lua require('dap').step_out()<CR>", { buffer = event.buf, desc = "Step out" })
+        local opts = { buffer = event.buf, silent = true }
+        
+        -- Testing
+        vim.keymap.set("n", "<leader>tt", "<cmd>GoTest<CR>", { buffer = event.buf, desc = "Run package tests" })
+        vim.keymap.set("n", "<leader>tf", "<cmd>GoTestFunc<CR>", { buffer = event.buf, desc = "Run function test" })
+        vim.keymap.set("n", "<leader>tF", "<cmd>GoTestFile<CR>", { buffer = event.buf, desc = "Run file tests" })
+        vim.keymap.set("n", "<leader>ta", "<cmd>GoAddTest<CR>", { buffer = event.buf, desc = "Add test for function" })
+        vim.keymap.set("n", "<leader>ts", "<cmd>GoFillStruct<CR>", { buffer = event.buf, desc = "Fill struct" })
+        
+        -- Coverage
+        vim.keymap.set("n", "<leader>tc", "<cmd>GoCoverage<CR>", { buffer = event.buf, desc = "Show test coverage" })
+        vim.keymap.set("n", "<leader>tC", "<cmd>GoCoverageClear<CR>", { buffer = event.buf, desc = "Clear coverage" })
+        vim.keymap.set("n", "<leader>tT", "<cmd>GoCoverageToggle<CR>", { buffer = event.buf, desc = "Toggle coverage" })
+        
+        -- Build and run
+        vim.keymap.set("n", "<leader>gb", "<cmd>GoBuild<CR>", { buffer = event.buf, desc = "Build package" })
+        vim.keymap.set("n", "<leader>gr", "<cmd>GoRun<CR>", { buffer = event.buf, desc = "Run package" })
+        
+        -- Code generation
+        vim.keymap.set("n", "<leader>gi", "<cmd>GoImpl<CR>", { buffer = event.buf, desc = "Generate interface implementation" })
+        vim.keymap.set("n", "<leader>ge", "<cmd>GoIfErr<CR>", { buffer = event.buf, desc = "Add if err != nil" })
+        
+        -- Struct tags
+        vim.keymap.set("n", "<leader>gj", "<cmd>GoTagAdd json<CR>", { buffer = event.buf, desc = "Add JSON tags" })
+        vim.keymap.set("n", "<leader>gy", "<cmd>GoTagAdd yaml<CR>", { buffer = event.buf, desc = "Add YAML tags" })
+        vim.keymap.set("n", "<leader>gx", "<cmd>GoTagRm<CR>", { buffer = event.buf, desc = "Remove tags" })
+        
+        -- Alternative functions
+        vim.keymap.set("n", "<leader>gA", "<cmd>GoAlt<CR>", { buffer = event.buf, desc = "Switch between test and implementation" })
+        vim.keymap.set("n", "<leader>gV", "<cmd>GoAltV<CR>", { buffer = event.buf, desc = "Switch to test/impl (vertical split)" })
+        vim.keymap.set("n", "<leader>gS", "<cmd>GoAltS<CR>", { buffer = event.buf, desc = "Switch to test/impl (horizontal split)" })
       end,
     })
   end,

@@ -2,23 +2,16 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Basic settings
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.termguicolors = true
-
--- Automatically install lazy.nvim if not present
+-- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  print("Installing lazy.nvim..")
+  print("Installing lazy.nvim...")
   vim.fn.system({
     "git",
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
     lazypath,
   })
   print("lazy.nvim installed successfully.")
@@ -30,10 +23,17 @@ require("core.options")
 require("core.clipboard")
 require("core.keymaps")
 
--- Load plugins using lazy.nvim
-require("lazy").setup("plugins")
-
--- custom commands
-vim.api.nvim_create_user_command("UninstallPlugins", function()
-  require("utils.functions").uninstall_plugins()
-end, {})
+-- Load plugins
+require("lazy").setup("plugins", {
+  -- Lazy.nvim configuration
+  install = {
+    colorscheme = { "rose-pine" },
+  },
+  checker = {
+    enabled = true,
+    notify = false,
+  },
+  change_detection = {
+    notify = false,
+  },
+})
