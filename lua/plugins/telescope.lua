@@ -43,6 +43,7 @@ return {
         find_files = {
           theme = "dropdown",
           previewer = false,
+          hidden = true,
         },
         git_files = {
           theme = "dropdown",
