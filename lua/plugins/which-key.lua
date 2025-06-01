@@ -193,6 +193,15 @@ return {
       { "gs", desc = "Signature help" },
       { "gh", desc = "Help tags" },
 
+      -- Comment group
+      { "gc", group = "comment (line)" },
+      { "gcc", desc = "Toggle line comment" },
+      { "gco", desc = "Add comment below" },
+      { "gcO", desc = "Add comment above" },
+      { "gcA", desc = "Add comment at end of line" },
+      { "gb", group = "comment (block)" },
+      { "gbc", desc = "Toggle block comment" },
+
       -- Function keys
       { "<F5>", desc = "Continue/Start debugging" },
       { "<F9>", desc = "Toggle breakpoint" },
