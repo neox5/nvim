@@ -115,7 +115,8 @@ return {
       -- Go group
       { "<leader>g", group = "go" },
       { "<leader>gb", desc = "Build package" },
-      { "<leader>gr", desc = "Run package" },
+      { "<leader>gr", desc = "Run go package" },
+      { "<leader>gR", desc = "Run go package (with args)" },
       { "<leader>gi", desc = "Generate interface impl" },
       { "<leader>ge", desc = "Add if err != nil" },
       { "<leader>gj", desc = "Add JSON tags" },

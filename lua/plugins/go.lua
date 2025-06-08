@@ -51,6 +51,34 @@ return {
       run_in_floaterm = false,
     })
 
+    ---------------------
+    -- HELPER FUCTIONS --
+    ---------------------
+
+    -- Function to run Go package from project root
+    local function run_package_from_root(prompt_for_args)
+      -- Get the directory containing the current file
+      local current_file_dir = vim.fn.expand('%:p:h')
+      
+      local args = ""
+      if prompt_for_args then
+        args = vim.fn.input("Run arguments: ")
+      end
+      
+      -- Build command: go run with absolute path
+      local cmd = 'go run ' .. current_file_dir
+      if args ~= '' then
+        cmd = cmd .. ' ' .. args
+      end
+      
+      -- Open in terminal split
+      vim.cmd('split | terminal ' .. cmd)
+    end
+
+    ------------------------
+    -- KEYMAPS DEFINITION --
+    ------------------------
+
     -- Go-specific keymaps (only when in Go files)
     vim.api.nvim_create_autocmd("FileType", {
       group = vim.api.nvim_create_augroup("GoMappings", { clear = true }),
@@ -72,8 +100,9 @@ return {
         
         -- Build and run
         vim.keymap.set("n", "<leader>gb", "<cmd>GoBuild<CR>", { buffer = event.buf, desc = "Build package" })
-        vim.keymap.set("n", "<leader>gr", "<cmd>GoRun<CR>", { buffer = event.buf, desc = "Run package" })
-        
+        vim.keymap.set("n", "<leader>gr", function() run_package_from_root(false) end, { buffer = event.buf, desc = "Run current go package" })
+        vim.keymap.set("n", "<leader>gR", function() run_package_from_root(true) end, { buffer = event.buf, desc = "Run current go package (with arguments)" })
+
         -- Code generation
         vim.keymap.set("n", "<leader>gi", "<cmd>GoImpl<CR>", { buffer = event.buf, desc = "Generate interface implementation" })
         vim.keymap.set("n", "<leader>ge", "<cmd>GoIfErr<CR>", { buffer = event.buf, desc = "Add if err != nil" })
