@@ -48,7 +48,7 @@ return {
       textobjects = true,
       
       -- Run in floaterm
-      run_in_floaterm = false,
+      run_in_floaterm = true,
     })
 
     ---------------------
