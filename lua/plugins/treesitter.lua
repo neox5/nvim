@@ -77,6 +77,18 @@ return {
           },
         },
       },
+      
+      -- Add folding support
+      fold = {
+        enable = true,
+        disable = {},
+      },
     })
+    
+    -- Set treesitter as fold method
+    vim.opt.foldmethod = "expr"
+    vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+    vim.opt.foldlevel = 99
+    vim.opt.foldlevelstart = 99
   end,
 }

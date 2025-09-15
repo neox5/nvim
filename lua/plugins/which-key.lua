@@ -78,12 +78,12 @@ return {
           S = "󰘶 ",
           CR = "󰌑 ",
           Esc = "󱊷 ",
-          ScrollWheelDown = "󰍽 ",
-          ScrollWheelUp = "󰍾 ",
+          ScrollWheelDown = "󰽽 ",
+          ScrollWheelUp = "󰽾 ",
           NL = "󰌑 ",
           BS = "󰁮",
           Space = "󱁐 ",
-          Tab = "󰌒 ",
+          Tab = "󰌑 ",
           F1 = "󱊫",
           F2 = "󱊬",
           F3 = "󱊭",
@@ -202,6 +202,11 @@ return {
       { "gcA", desc = "Add comment at end of line" },
       { "gb", group = "comment (block)" },
       { "gbc", desc = "Toggle block comment" },
+
+      -- Essential folding commands only
+      { "za", desc = "Toggle fold" },
+      { "zR", desc = "Open all folds" },
+      { "zM", desc = "Close all folds" },
 
       -- Function keys
       { "<F5>", desc = "Continue/Start debugging" },

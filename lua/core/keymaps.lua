@@ -40,3 +40,10 @@ keymap("n", "<leader>pe", vim.cmd.Ex, opts) -- "project explore"
 
 -- Quick save
 keymap("n", "<leader>w", ":w<CR>", opts)
+
+-- Code folding
+keymap("n", "za", "za", opts)  -- Toggle fold under cursor
+keymap("n", "zR", "zR", opts)  -- Open all folds
+keymap("n", "zM", "zM", opts)  -- Close all folds
+keymap("n", "zr", "zr", opts)  -- Open one fold level
+keymap("n", "zm", "zm", opts)  -- Close one fold level
