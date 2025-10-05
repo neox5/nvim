@@ -6,6 +6,15 @@ return {
     "theHamsta/nvim-dap-virtual-text",
     "leoluz/nvim-dap-go",
   },
+  keys = {  -- NEW: Lazy load on keybindings
+    { "<leader>db", desc = "Toggle breakpoint" },
+    { "<leader>dc", desc = "Continue" },
+    { "<leader>ds", desc = "Step over" },
+    { "<F5>", desc = "Continue/Start debugging" },
+    { "<F9>", desc = "Toggle breakpoint" },
+    { "<F10>", desc = "Step over" },
+    { "<F11>", desc = "Step into" },
+  },
   config = function()
     local dap = require("dap")
     local dapui = require("dapui")
@@ -76,9 +85,9 @@ return {
       }
     })
     
-    -- Virtual text (disabled by default)
+    -- UPDATED: Virtual text with improved configuration
     dap_virtual_text.setup({
-      enabled = false,  -- Start disabled by default
+      enabled = true,  -- CHANGED: Now enabled by default with limits
       enabled_commands = true,
       highlight_changed_variables = true,
       highlight_new_as_changed = false,
@@ -87,27 +96,33 @@ return {
       only_first_definition = true,
       all_references = false,
       clear_on_continue = false,
+      
+      -- IMPROVED: Custom display callback to limit length
       display_callback = function(variable, buf, stackframe, node, options)
+        -- Limit value length to prevent clutter
+        local value = variable.value
+        if #value > 50 then
+          value = string.sub(value, 1, 50) .. '...'
+        end
+        
         if options.virt_text_pos == 'inline' then
-          return ' = ' .. variable.value
+          return ' = ' .. value
         else
-          return variable.name .. ' = ' .. variable.value
+          return variable.name .. ' = ' .. value
         end
       end,
+      
       virt_text_pos = vim.fn.has 'nvim-0.10' == 1 and 'inline' or 'eol',
       all_frames = false,
       virt_lines = false,
       virt_text_win_col = nil
     })
 
-    -- Force disable it immediately after setup
-    dap_virtual_text.disable()
-
-    -- Simple toggle function using the built-in commands
+    -- IMPROVED: Simple toggle function using built-in commands
     local function toggle_dap_virtual_text()
-      -- Use the built-in toggle command instead of manual state tracking
       vim.cmd("DapVirtualTextToggle")
     end   
+
     -- Setup Go debugging
     require("dap-go").setup({
       delve = {

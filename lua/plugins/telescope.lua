@@ -1,9 +1,17 @@
 return {
   "nvim-telescope/telescope.nvim",
-  branch = "0.1.x",
+  branch = "master",  -- CHANGED: from '0.1.x' to 'master'
+  cmd = "Telescope",  -- NEW: Lazy load on command
+  keys = {  -- NEW: Lazy load on keybindings
+    { "<leader>pf", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+    { "<C-p>", "<cmd>Telescope git_files<cr>", desc = "Find git files" },
+    { "<leader>pg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
+    { "<leader>gh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
+    { "<leader>pb", "<cmd>Telescope buffers<cr>", desc = "Find buffers" },
+    { "<leader>ps", "<cmd>Telescope grep_string<cr>", desc = "Grep string under cursor" },
+  },
   dependencies = { 
     "nvim-lua/plenary.nvim",
-    -- Optional: telescope-fzf-native for better performance
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   },
   config = function()
@@ -60,13 +68,5 @@ return {
     
     -- Load fzf extension for better performance
     pcall(telescope.load_extension, "fzf")
-    
-    -- Keymaps
-    vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "Find files" })
-    vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Find git files" })
-    vim.keymap.set("n", "<leader>pg", builtin.live_grep, { desc = "Live grep" })
-    vim.keymap.set("n", "<leader>gh", builtin.help_tags, { desc = "Help tags" })
-    vim.keymap.set("n", "<leader>pb", builtin.buffers, { desc = "Find buffers" })
-    vim.keymap.set("n", "<leader>ps", builtin.grep_string, { desc = "Grep string under cursor" })
   end,
 }

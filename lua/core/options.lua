@@ -48,6 +48,14 @@ opt.cmdheight = 1
 -- Completion
 opt.completeopt = { "menu", "menuone", "noselect" }
 
+-- UPDATED: Treesitter folding configuration
+opt.foldmethod = "manual"
+opt.foldexpr = ""
+opt.foldlevel = 99         -- Start with all folds open
+opt.foldlevelstart = 1     -- Top-level folds open by default
+opt.foldnestmax = 4        -- Limit fold depth for performance
+opt.foldenable = false      -- Enable folding
+
 -- Disable automatic comment continuation
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()

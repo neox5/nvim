@@ -1,7 +1,8 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "master",  -- NEW: Explicit branch to prevent future breakage
   build = ":TSUpdate",
-  event = { "BufReadPre", "BufNewFile" },
+  event = { "BufReadPost", "BufNewFile" },  -- NEW: Lazy load on buffer read
   dependencies = {
     "nvim-treesitter/nvim-treesitter-textobjects",
   },
@@ -78,17 +79,7 @@ return {
         },
       },
       
-      -- Add folding support
-      fold = {
-        enable = true,
-        disable = {},
-      },
+      -- Add folding support is now handled in core/options.lua
     })
-    
-    -- Set treesitter as fold method
-    vim.opt.foldmethod = "expr"
-    vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-    vim.opt.foldlevel = 99
-    vim.opt.foldlevelstart = 99
   end,
 }

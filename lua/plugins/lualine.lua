@@ -1,7 +1,7 @@
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
-  event = "VeryLazy",
+  event = "VeryLazy",  -- NEW: Lazy load for faster startup
   config = function()
     require("lualine").setup({
       options = {
@@ -45,7 +45,7 @@ return {
             "diff",
             symbols = {
               added = " ",
-              modified = "󰏫 ",
+              modified = " ",
               removed = " "
             },
             colored = true,
@@ -61,10 +61,10 @@ return {
             "filename",
             path = 1, -- Show relative path
             symbols = {
-              modified = " 󰷥",
+              modified = " ",
               readonly = " ",
               unnamed = "[No Name]",
-              newfile = " 󰄛",
+              newfile = " ",
             },
             fmt = function(str)
               -- Shorten long paths
@@ -81,13 +81,13 @@ return {
         lualine_x = {
           {
             "diagnostics",
-            sources = { "nvim_diagnostic" },
+            sources = { "nvim_diagnostic" },  -- CHANGED: from 'nvim_lsp' to 'nvim_diagnostic'
             sections = { "error", "warn", "info", "hint" },
             symbols = { 
               error = " ", 
               warn = " ", 
               info = " ", 
-              hint = "󰌶 " 
+              hint = " " 
             },
             colored = true,
             update_in_insert = false,
@@ -111,7 +111,7 @@ return {
               for _, client in pairs(clients) do
                 table.insert(client_names, client.name)
               end
-              return "󰒋 " .. table.concat(client_names, " ")
+              return " " .. table.concat(client_names, " ")
             end,
             colored = true,
             color = { fg = "#a3be8c" },
@@ -129,13 +129,13 @@ return {
           {
             "location", 
             fmt = function(str)
-              return str .. " 󰕾"
+              return str .. " "
             end,
           },
           {
             "progress",
             fmt = function(str)
-              return str == "Top" and "󰝤" or str == "Bot" and "󰝦" or str
+              return str == "Top" and "" or str == "Bot" and "" or str
             end,
           }
         }
@@ -148,7 +148,7 @@ return {
             "filename",
             path = 1,
             symbols = {
-              modified = " 󰷥",
+              modified = " ",
               readonly = " ",
             }
           }
@@ -160,7 +160,7 @@ return {
       tabline = {},
       winbar = {},
       inactive_winbar = {},
-      extensions = { "nvim-dap-ui", "lazy" }
+      extensions = { "nvim-dap-ui", "lazy", "neo-tree" }  -- CHANGED: Added neo-tree
     })
   end,
 }

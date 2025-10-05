@@ -1,10 +1,12 @@
 return {
   "ray-x/go.nvim",
+  version = "v0.10.4",  -- CHANGED: Pin to specific version
   dependencies = {
     "ray-x/guihua.lua",
-    "neovim/nvim-lspconfig",
     "nvim-treesitter/nvim-treesitter",
   },
+  ft = { "go", "gomod" },  -- Lazy load on Go filetypes
+  build = ':lua require("go.install").update_all_sync()',
   config = function()
     require("go").setup({
       -- Disable LSP features (handled by lspconfig.lua)
@@ -16,11 +18,11 @@ return {
       import_on_save = false,
 
       lsp_inlay_hints = {
-        enable = false
+        enable = false  -- Handled by gopls directly
       },
       
       -- Enable testing and debugging features
-      test_runner = "go",
+      test_runner = "go",  -- or "gotestsum" if you have it installed
       dap_debug = true,
       dap_debug_gui = true,
       luasnip = true,
@@ -31,6 +33,7 @@ return {
       test_env = {},
       test_template = "",
       test_template_dir = "",
+      verbose_tests = true,  -- NEW: Show detailed test output
       
       -- Coverage options
       coverage = {
@@ -52,7 +55,7 @@ return {
     })
 
     ---------------------
-    -- HELPER FUCTIONS --
+    -- HELPER FUNCTIONS --
     ---------------------
 
     -- Function to run Go package from project root
@@ -119,7 +122,4 @@ return {
       end,
     })
   end,
-  event = { "CmdlineEnter" },
-  ft = { "go", "gomod" },
-  build = ':lua require("go.install").update_all_sync()',
 }
