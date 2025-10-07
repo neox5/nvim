@@ -138,6 +138,7 @@ return {
       { "<leader>tT", desc = "Toggle coverage" },
       { "<leader>td", desc = "Debug test" },
       { "<leader>tD", desc = "Debug last test" },
+      { "<leader>tb", desc = "Run function benchmark" },
 
       -- Debug/Diagnostic group
       { "<leader>d", group = "debug/diagnostic" },
@@ -203,10 +204,13 @@ return {
       { "gb", group = "comment (block)" },
       { "gbc", desc = "Toggle block comment" },
 
-      -- Essential folding commands only
+      -- Folding group
+      { "z", group = "fold" },
       { "za", desc = "Toggle fold" },
       { "zR", desc = "Open all folds" },
       { "zM", desc = "Close all folds" },
+      { "zr", desc = "Open fold level" },
+      { "zm", desc = "Close fold level" },
 
       -- Function keys
       { "<F5>", desc = "Continue/Start debugging" },

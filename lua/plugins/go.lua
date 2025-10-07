@@ -33,7 +33,6 @@ return {
       test_env = {},
       test_template = "",
       test_template_dir = "",
-      verbose_tests = true,  -- NEW: Show detailed test output
       
       -- Coverage options
       coverage = {
@@ -91,11 +90,14 @@ return {
         
         -- Testing
         vim.keymap.set("n", "<leader>tt", "<cmd>GoTest<CR>", { buffer = event.buf, desc = "Run package tests" })
-        vim.keymap.set("n", "<leader>tf", "<cmd>GoTestFunc<CR>", { buffer = event.buf, desc = "Run function test" })
+        vim.keymap.set("n", "<leader>tf", "<cmd>GoTestFunc -v<CR>", { buffer = event.buf, desc = "Run function test" })
         vim.keymap.set("n", "<leader>tF", "<cmd>GoTestFile<CR>", { buffer = event.buf, desc = "Run file tests" })
         vim.keymap.set("n", "<leader>ta", "<cmd>GoAddTest<CR>", { buffer = event.buf, desc = "Add test for function" })
         vim.keymap.set("n", "<leader>ts", "<cmd>GoFillStruct<CR>", { buffer = event.buf, desc = "Fill struct" })
-        
+
+        -- Benchmarks
+        vim.keymap.set("n", "<leader>tb", "<cmd>GoTestFunc -bench<CR>", { buffer = event.buf, desc = "Run function benchmark" })
+
         -- Coverage
         vim.keymap.set("n", "<leader>tc", "<cmd>GoCoverage<CR>", { buffer = event.buf, desc = "Show test coverage" })
         vim.keymap.set("n", "<leader>tC", "<cmd>GoCoverageClear<CR>", { buffer = event.buf, desc = "Clear coverage" })
