@@ -46,7 +46,7 @@ opt.showcmd = true
 opt.cmdheight = 1
 
 -- Completion
-opt.completeopt = { "menu", "menuone", "noselect" }
+opt.completeopt = { "menu", "menuone", "noinsert" }
 
 -- UPDATED: Treesitter folding configuration
 opt.foldmethod = "manual"
