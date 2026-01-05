@@ -1,9 +1,5 @@
--- Return configuration table directly
--- Neovim 0.11+ automatically loads this from lsp/ directory
+---@type vim.lsp.Config
 return {
-	cmd = { "gopls" },
-	filetypes = { "go", "gomod", "gowork", "gotmpl" },
-	root_markers = { "go.work", "go.mod", ".git" },
 	capabilities = require("lsp.capabilities").make(),
 	settings = {
 		gopls = {
