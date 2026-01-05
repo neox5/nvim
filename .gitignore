@@ -7,5 +7,5 @@
 *.orig
 *.un~
 
-# snap output
-snap.txt
+# snp output
+snp.txt
