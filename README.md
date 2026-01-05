@@ -1,78 +1,100 @@
 # Neovim Configuration
 
-### Requirements
-- **Neovim ≥ 0.11**
-- **wl-clipboard** (Wayland)
-- **Go**, **Lua**, **Python**, and other relevant language toolchains
-- **git**, **make**, **ripgrep**
+Personal Neovim configuration optimized for Go and Lua development.
 
----
+## Requirements
 
-### Structure
+- Neovim 0.11+
+- Go toolchain (for gopls)
+- lua-language-server
+
+## Structure
+
+```
+~/.config/nvim/
+├── init.lua                    # Entry point
+├── lua/
+│   ├── core/                   # Core Neovim settings
+│   │   ├── options.lua         # Vim options
+│   │   ├── keymaps.lua         # Key mappings
+│   │   └── clipboard.lua       # Clipboard configuration
+│   ├── lsp/                    # LSP configuration
+│   │   ├── gopls.lua           # Go server overrides
+│   │   ├── lua_ls.lua          # Lua server overrides
+│   │   ├── attach.lua          # LspAttach autocmd
+│   │   ├── capabilities.lua    # Client capabilities
+│   │   ├── diagnostics.lua     # Diagnostic configuration
+│   │   └── inlay_hints.lua     # Inlay hint toggle
+│   ├── plugins/                # Plugin specifications
+│   │   ├── lspconfig.lua       # LSP setup
+│   │   ├── cmp.lua             # Completion
+│   │   ├── conform.lua         # Formatting
+│   │   └── ...
+│   └── utils/
+│       └── functions.lua       # Utility functions
+└── lazy-lock.json              # Plugin versions
 ```
 
-~/.config/nvim/
-├── init.lua
-├── lua/
-│   ├── core/         # options, keymaps, clipboard
-│   ├── plugins/      # all plugin specs for lazy.nvim
-│   ├── lsp/          # native LSP config using new API
-│   │   ├── servers/  # one file per server (gopls, lua_ls, etc.)
-│   │   ├── attach.lua
-│   │   ├── capabilities.lua
-│   │   ├── diagnostics.lua
-│   │   ├── inlay_hints.lua
-│   │   └── init.lua
-│   └── utils/        # utility functions
+## LSP Configuration
 
-````
+Uses Neovim 0.11+ native LSP API with nvim-lspconfig for server defaults.
 
----
+### How It Works
 
-### Key Features
-- **Native LSP** using `vim.lsp.config()` and `vim.lsp.enable()`
-- **Completion** via `nvim-cmp` + `LuaSnip` with `<Tab>` navigation
-- **Formatting** via `conform.nvim` (mapped to `<leader>f`)
-- **DAP** debugging with `nvim-dap` + `nvim-dap-ui`
-- **Tree-sitter** syntax highlighting and folding
-- **Go** integration using `go.nvim`
-- **Commenting**, **Telescope**, **Neo-tree**, and **Lualine** preconfigured
+Configurations are automatically merged from multiple sources:
 
----
+1. **nvim-lspconfig defaults** (`nvim-lspconfig/lsp/<server>.lua`)
+   - Provides: `cmd`, `filetypes`, `root_dir` logic
+   - Battle-tested defaults for 300+ servers
 
-### Notable Keymaps
-| Action | Key |
-|--------|-----|
-| Save file | `<leader>w` |
-| Format code | `<leader>f` |
-| File explorer | `<leader>e` |
-| Toggle inlay hints | `<leader>h` |
-| LSP rename | `<leader>rn` |
-| Code actions | `<leader>ca` |
-| DAP controls | `<F5>`, `<F9>`, `<F10>`, `<F11>` |
-| Telescope find files | `<leader>pf` |
+2. **Your overrides** (`lsp/<server>.lua`)
+   - Override: `capabilities`, `settings`, or any default
+   - Only specify what you customize
 
----
+3. **Enable servers** (`plugins/lspconfig.lua`)
+   - Call `vim.lsp.enable('<server>')` to activate
 
-### Updating and Maintenance
+### Adding a New Server
+
+1. Install the language server binary
+2. Create `lsp/<server>.lua` with your overrides:
+   ```lua
+   return {
+     capabilities = require("lsp.capabilities").make(),
+     settings = { ... },
+   }
+   ```
+3. Enable in `plugins/lspconfig.lua`:
+   ```lua
+   vim.lsp.enable('<server>')
+   ```
+
+### Current Servers
+
+- **gopls**: Go language server with gofumpt, staticcheck, inlay hints
+- **lua_ls**: Lua language server with Neovim API support
+
+## Installation
+
 ```bash
-:PackerClean
-:Lazy sync
-````
+# Clone repository
+git clone https://github.com/yourusername/nvim-config ~/.config/nvim
 
-* All LSP servers use the **new native config/enable API**.
-* `lspconfig.lua` was removed — replaced by `plugins/native-lsp.lua`.
-* Ensure `completeopt = menu,menuone,noinsert` in `core/options.lua`.
+# Launch Neovim (lazy.nvim will auto-install plugins)
+nvim
+```
 
----
+## Key Features
 
-### Notes
+- Native LSP with auto-completion
+- Treesitter syntax highlighting
+- Fuzzy finding with Telescope
+- Git integration
+- Auto-formatting on save
+- Inlay hints toggle
 
-* Use `<leader>` = `space`.
-* Completion triggers on `InsertEnter` and `TextChanged`.
-* Format-on-save is optional and can be toggled with `:FormatDisable` / `:FormatEnable`.
-* DAP UI auto-opens on debugging start.
+## References
 
----
-
-This README reflects the streamlined Neovim 0.11+ configuration with lazy.nvim and native LSP setup.
+- [Neovim LSP Documentation](https://neovim.io/doc/user/lsp.html)
+- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
+- [lazy.nvim](https://github.com/folke/lazy.nvim)
