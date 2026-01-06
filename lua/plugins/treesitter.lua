@@ -2,7 +2,7 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "master", -- NEW: Explicit branch to prevent future breakage
 	build = ":TSUpdate",
-	event = { "BufReadPost", "BufNewFile" }, -- NEW: Lazy load on buffer read
+	event = { "VeryLazy" },
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects",
 	},
