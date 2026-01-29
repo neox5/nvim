@@ -10,5 +10,5 @@
 # Ignore log files
 **/*.log
 
-# snp output
-**/snp.txt
+# snapshot files
+**/*.snp
