@@ -35,36 +35,6 @@ keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
--- File explorer
-keymap("n", "<leader>e", vim.cmd.Ex, opts)
-keymap("n", "<leader>pe", vim.cmd.Ex, opts) -- "project explore"
-
--- Netrw: Custom behavior
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "netrw",
-	callback = function()
-		-- Use <leader>e to open file (like Enter)
-		vim.keymap.set("n", "<leader>e", "<CR>", { buffer = true, remap = true })
-
-		-- Position cursor on current file when opening
-		local current_file = vim.fn.expand("#:t")
-		if current_file == "" then
-			return
-		end
-
-		vim.schedule(function()
-			local bufnr = vim.api.nvim_get_current_buf()
-			local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
-			for i, line in ipairs(lines) do
-				if line:match("%f[%w]" .. vim.pesc(current_file) .. "%f[%W]") then
-					vim.api.nvim_win_set_cursor(0, { i, 0 })
-					break
-				end
-			end
-		end)
-	end,
-})
-
 -- Quick save
 keymap("n", "<leader>w", ":w<CR>", opts)
 

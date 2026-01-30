@@ -83,7 +83,7 @@ return {
 					NL = "󰌑 ",
 					BS = "󰁮",
 					Space = "󱁐 ",
-					Tab = "󰌒 ",
+					Tab = "󰌑 ",
 					F1 = "󱊫",
 					F2 = "󱊬",
 					F3 = "󱊭",
@@ -110,10 +110,10 @@ return {
 			{ "<leader>pg", desc = "Live grep" },
 			{ "<leader>ps", desc = "Grep string" },
 			{ "<leader>pb", desc = "Find buffers" },
-			{ "<leader>pe", desc = "File explorer" },
+			{ "<leader>pe", desc = "File explorer (float)" },
 
 			-- Explorer group
-			{ "<leader>e", desc = "Toggle file explorer" },
+			{ "<leader>e", desc = "File explorer" },
 
 			-- Go group
 			{ "<leader>g", group = "go" },

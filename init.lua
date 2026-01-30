@@ -1,7 +1,10 @@
+-- disable netrw (replaced by oil.nvim)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Set leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -17,13 +20,11 @@ if not vim.loop.fs_stat(lazypath) then
 	print("lazy.nvim installed successfully.")
 end
 vim.opt.rtp:prepend(lazypath)
-
 -- Load core configurations
 require("core.clipboard")
 require("core.filetypes")
 require("core.keymaps")
 require("core.options")
-
 -- Load plugins
 require("lazy").setup("plugins", {
 	-- Lazy.nvim configuration
