@@ -6,9 +6,7 @@ return {
 	keys = {
 		{
 			"<leader>f",
-			function()
-				require("conform").format({ async = true, lsp_fallback = true })
-			end,
+			function() require("conform").format({ async = true, lsp_fallback = true }) end,
 			mode = { "n", "v" },
 			desc = "Format buffer",
 		},
@@ -41,9 +39,7 @@ return {
 		-- Check each unique formatter
 		local missing = {}
 		for fmt, filetypes in pairs(formatter_usage) do
-			if vim.fn.executable(fmt) == 0 then
-				missing[fmt] = filetypes
-			end
+			if vim.fn.executable(fmt) == 0 then missing[fmt] = filetypes end
 		end
 
 		-- Build and show notification if any formatters are missing
@@ -62,9 +58,7 @@ return {
 			-- Format on save
 			format_on_save = function(bufnr)
 				-- Disable with a global or buffer-local variable
-				if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-					return
-				end
+				if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
 
 				return {
 					timeout_ms = 500,

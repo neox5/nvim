@@ -17,9 +17,7 @@ return {
 				{ "<auto>", mode = "nixsotc" },
 				{ "s", mode = { "n", "v" } },
 			},
-			defer = function(ctx)
-				return ctx.mode == "V" or ctx.mode == "<C-V>"
-			end,
+			defer = function(ctx) return ctx.mode == "V" or ctx.mode == "<C-V>" end,
 			plugins = {
 				marks = true,
 				registers = true,

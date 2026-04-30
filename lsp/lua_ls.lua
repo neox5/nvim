@@ -1,3 +1,8 @@
+local binary = "lua-language-server"
+if vim.fn.executable(binary) == 0 then
+	vim.notify(string.format("LSP binary not found: %s\nInstall from: https://github.com/LuaLS/lua-language-server/releases", binary), vim.log.levels.WARN, { title = "LSP" })
+end
+
 ---@type vim.lsp.Config
 return {
 	capabilities = require("lsp.capabilities").make(),

@@ -35,9 +35,7 @@ return {
 						"branch",
 						icon = "",
 						fmt = function(str)
-							if str == "" then
-								return ""
-							end
+							if str == "" then return "" end
 							return str:len() > 20 and str:sub(1, 17) .. "..." or str
 						end,
 					},
@@ -70,9 +68,7 @@ return {
 							-- Shorten long paths
 							if str:len() > 40 then
 								local parts = vim.split(str, "/")
-								if #parts > 3 then
-									return ".../" .. table.concat({ parts[#parts - 1], parts[#parts] }, "/")
-								end
+								if #parts > 3 then return ".../" .. table.concat({ parts[#parts - 1], parts[#parts] }, "/") end
 							end
 							return str
 						end,
@@ -103,9 +99,7 @@ return {
 						-- Show LSP status
 						function()
 							local clients = vim.lsp.get_clients()
-							if next(clients) == nil then
-								return ""
-							end
+							if next(clients) == nil then return "" end
 
 							local client_names = {}
 							for _, client in pairs(clients) do
@@ -128,15 +122,11 @@ return {
 				lualine_z = {
 					{
 						"location",
-						fmt = function(str)
-							return str .. " "
-						end,
+						fmt = function(str) return str .. " " end,
 					},
 					{
 						"progress",
-						fmt = function(str)
-							return str == "Top" and "" or str == "Bot" and "" or str
-						end,
+						fmt = function(str) return str == "Top" and "" or str == "Bot" and "" or str end,
 					},
 				},
 			},
