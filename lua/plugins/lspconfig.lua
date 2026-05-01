@@ -13,6 +13,6 @@ return {
 		--   2. your lsp/<server>.lua (overrides)
 		vim.lsp.enable("gopls")
 		vim.lsp.enable("lua_ls")
-		vim.lsp.enable("tsserver")
+		vim.lsp.enable("ts_ls")
 	end,
 }
